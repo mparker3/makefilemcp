@@ -1,16 +1,10 @@
 # makefilemcpserver
 
-An MCP (Model Context Protocol) server that exposes Makefile targets as callable tools for AI assistants like Claude.
+An MCP (Model Context Protocol) server that exposes Makefile targets as callable tools for AI assistants like Claude, Cursor, etc. 
 
 ⚠️ **ALPHA SOFTWARE - LOCAL USE ONLY** ⚠️  
-This server executes Make commands with user-provided arguments. Only use in trusted environments.
-
-## Features
-
-- **Dynamic Discovery**: Automatically parses your Makefile and exposes each target as a tool
-- **Target Descriptions**: Extracts descriptions from comments preceding Make targets  
-- **Flexible Arguments**: Pass additional arguments to any Make command
-- **Cross-Platform**: Works on macOS, Linux, and Windows (with make installed)
+This server executes Make commands with user-provided arguments. Only use in trusted environments. It intelligently parses out commands and args. 
+This almost certainly won't work flawlessly for your Makefile. In fact, it might not even work at all. 
 
 ## Installation
 
@@ -23,7 +17,7 @@ This server executes Make commands with user-provided arguments. Only use in tru
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/makefilemcpserver.git
+git clone https://github.com/mparker3/makefilemcpserver.git
 cd makefilemcpserver
 ```
 
@@ -39,12 +33,7 @@ npm run build
 
 ## Usage
 
-### With Claude Desktop
-
-Add to your Claude Desktop configuration:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+Add to your MCP server configuration:
 
 ```json
 {
@@ -85,17 +74,14 @@ This will expose tools: `make_build`, `make_test`, and `make_deploy` to Claude.
 1. The server reads your Makefile at startup
 2. Each Make target becomes a tool with the name `make_<target>`
 3. Comments directly above targets become tool descriptions
-4. Pattern rules (%) and variable assignments are ignored
-5. Claude can then run any target with optional arguments
+4. MCP clients can then run any target with optional arguments. We do some best-effort parsing of args from docs + commands, a better approach would just be to offload it to yet another LLM call(s) at startup. 
 
 ## Security Considerations
 
 ⚠️ **WARNING**: This server executes shell commands via Make. It currently has minimal input validation.
 
-- Only use in local, trusted environments
-- Do not expose to untrusted users or networks
-- Be cautious with Makefiles that accept user input
-- Consider the security implications of your Make targets
+- Anything you expose in your Makefile, any MCP client will have access to. Highly recommend running _locally only_. 
+- The server does some de rigeur input sanitization, but no guarantees that an enterprising security researcher can't figure out a way around it. 
 
 ## Development
 
@@ -138,9 +124,7 @@ MIT - See LICENSE file for details
 
 ## Roadmap
 
-- [ ] Add input sanitization for shell arguments
 - [ ] Support for multiple Makefiles
 - [ ] Configuration for timeout values
-- [ ] Filtering/whitelisting of Make targets
 - [ ] Better error messages and logging
 - [ ] Tests and CI/CD pipeline
