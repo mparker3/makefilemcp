@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "makefilemcpserver": {
+      "command": "node",
+      "args": [
+        "/path/to/makefilemcpserver/build/index.js",
+        "/path/to/directory/with/makefile"
+      ]
+    }
+  }
+}

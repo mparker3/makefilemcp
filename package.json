@@ -1,0 +1,48 @@
+{
+  "name": "makefilemcpserver",
+  "version": "0.1.0",
+  "description": "MCP server that exposes Makefile targets as tools for AI assistants",
+  "private": false,
+  "type": "module",
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/makefilemcpserver.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "makefile",
+    "make",
+    "build-tools",
+    "ai-tools"
+  ],
+  "bin": {
+    "makefilemcpserver": "./build/index.js"
+  },
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "@jest/globals": "^29.7.0"
+  }
+}
